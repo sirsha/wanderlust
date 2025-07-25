@@ -18,6 +18,8 @@ export default function BlogFeed() {
       selectedCategory === 'featured'
         ? '/api/posts/featured'
         : `/api/posts/categories/${selectedCategory}`;
+    const fullUrl = import.meta.env.VITE_API_PATH + categoryEndpoint;
+    console.log("Fetching posts from:", fullUrl); // 👈 Add this line
 
     setLoading(true);
     axios
