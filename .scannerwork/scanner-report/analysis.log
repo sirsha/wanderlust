@@ -33,7 +33,7 @@ Project scanner properties:
   - sonar.scanner.app=ScannerCLI
   - sonar.scanner.appVersion=7.2.0.5079
   - sonar.scanner.arch=x86_64
-  - sonar.scanner.bootstrapStartTime=1753481107037
+  - sonar.scanner.bootstrapStartTime=1753481229009
   - sonar.scanner.os=linux
   - sonar.scanner.wasEngineCacheHit=true
   - sonar.verbose=true

@@ -1,1 +1,1 @@
-D 2yamlX'hrkubernetes/frontend.yaml
+D 2yamlX'hrkubernetes/frontend.yaml
