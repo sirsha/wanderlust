@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: sirsha/wanderlust-backend-beta:v.6
+          image: sirsha/wanderlust-backend-beta:v6.4
           ports:
             - containerPort: 5000
 ---
