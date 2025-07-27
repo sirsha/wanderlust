@@ -6,7 +6,11 @@ WanderLust is a simple MERN travel blog website ✈ This project is aimed to hel
 
 # Wanderlust Mega Project End to End Implementation
 
-### In this demo, we will see how to deploy an end to end three tier MERN stack application on EKS cluster.
+### In this demo, we will see how to deploy an end to end three tier MERN stack application on EKS cluster, utilizing Jenkins for continuous integration, ArgoCD for continuous deployment, and Prometheus and Grafana for monitoring.
+#
+### <mark>Project Deployment Flow:</mark>
+<img src="https://github.com/sirsha/wanderlust/blob/devops/images/Untitled%20Diagram.drawio.png" />
+
 #
 
 ## Tech stack used in this project:
@@ -23,12 +27,14 @@ WanderLust is a simple MERN travel blog website ✈ This project is aimed to hel
 
 ### How pipeline will look after deployment:
 - <b>CI pipeline to build and push</b>
+
 ![image](https://github.com/sirsha/wanderlust/blob/devops/images/Screenshot%202025-07-25%20205322.png)
 
 - <b>CD pipeline to update application version</b>
-![image](https://github.com/sirsha/wanderlust/blob/devops/images/diagram-export-7-25-2025-8_58_10-PM.png)
 
+![image](https://github.com/sirsha/wanderlust/blob/devops/images/diagram-export-7-25-2025-8_58_10-PM.png)
 - <b>ArgoCD application for deployment on EKS</b>
+
 ![image](https://github.com/sirsha/wanderlust/blob/devops/images/Screenshot%202025-07-25%20210038.png)
 
 #
@@ -63,7 +69,7 @@ sudo su
 ![image](https://github.com/sirsha/wanderlust/blob/devops/images/Screenshot%202025-07-25%20210844.png)
 
 
-- Create an IAM role with <mark>administrator access</mark> attach it to the jenkins node <mark>Select Jenkins worker node EC2 instance --> Actions --> Security --> Modify IAM role</mark>
+- Create an IAM role with <mark>administrator access</mark> attach it to the jenkins node <mark>Select Jenkins node EC2 instance --> Actions --> Security --> Modify IAM role</mark>
   ![image](https://github.com/user-attachments/assets/1a9060db-db11-40b7-86f0-47a65e8ed68b)
 
   #
@@ -123,10 +129,10 @@ sudo su
   - Docker
   - Pipeline: Stage View
 #
-- <b id="Owasp">Configure OWASP, move to <mark>Manage Jenkins --> Plugins --> Available plugins</mark> (Jenkins Worker)</b>
+- <b id="Owasp">Configure OWASP, move to <mark>Manage Jenkins --> Plugins --> Available plugins</mark> (Jenkins node)</b>
 ![image](https://github.com/user-attachments/assets/da6a26d3-f742-4ea8-86b7-107b1650a7c2)
 #
-- <b id="Sonar">After OWASP plugin is installed, Now move to <mark>Manage jenkins --> Tools</mark> (Jenkins Worker)</b>
+- <b id="Sonar">After OWASP plugin is installed, Now move to <mark>Manage jenkins --> Tools</mark> (Jenkins node)</b>
 ![image](https://github.com/user-attachments/assets/3b8c3f20-202e-4864-b3b6-b48d7a604ee8)
 
 #
@@ -213,10 +219,18 @@ kubectl edit svc stable-grafana -n prometheus
 ![image](https://github.com/sirsha/wanderlust/blob/devops/images/Screenshot%202025-07-25%20221017.png)
 
 #
+#
 - Check grafana service
 ```bash
 kubectl get svc -n prometheus
-
+```
+#
+- Get a password for grafana
+```bash
+kubectl get secret --namespace prometheus stable-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+```
+> [!Note]
+> Username: admin
 
 #
 - Now, view the Dashboard in Grafana
@@ -227,7 +241,8 @@ kubectl get svc -n prometheus
 ## Clean Up
 - <b id="Clean">Delete eks cluster</b>
 ```bash
-eksctl delete cluster --name=wanderlust --region=us-west-1
+eksctl delete cluster --name=wanderlust --region=us-east-1
 ```
 
 #
+
